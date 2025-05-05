@@ -1,0 +1,10 @@
+{
+  "resourceName": "Connections",
+  "tableName": "Connections",
+  "partitionKey": {
+    "fieldName": "connectionId",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

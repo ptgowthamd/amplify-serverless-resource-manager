@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "storage": {
+      "UserVPCSubnetDetails": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "Connections": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

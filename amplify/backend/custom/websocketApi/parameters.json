@@ -1,0 +1,22 @@
+{
+    "env": "stagging",
+  
+    "functionConnectHandlerName":           "ConnectHandler-stagging",
+    "functionConnectHandlerArn":            "arn:aws:lambda:ap-south-1:112097210422:function:ConnectHandler-stagging",
+    "functionConnectHandlerRegion":         "ap-south-1",
+    "functionConnectHandlerLambdaExecutionRole":    "resourcemanagerLambdaRole8eff60ab-stagging",
+    "functionConnectHandlerLambdaExecutionRoleArn": "arn:aws:iam::112097210422:role/resourcemanagerLambdaRole8eff60ab-stagging",
+  
+    "functionDisconnectHandlerName":           "DisconnectHandler-stagging",
+    "functionDisconnectHandlerArn":            "arn:aws:lambda:ap-south-1:112097210422:function:DisconnectHandler-stagging",
+    "functionDisconnectHandlerRegion":         "ap-south-1",
+    "functionDisconnectHandlerLambdaExecutionRole":    "resourcemanagerLambdaRolea9f7da96-stagging",
+    "functionDisconnectHandlerLambdaExecutionRoleArn": "arn:aws:iam::112097210422:role/resourcemanagerLambdaRolea9f7da96-stagging",
+  
+    "functionMessageHandlerName":           "MessageHandler-stagging",
+    "functionMessageHandlerArn":            "arn:aws:lambda:ap-south-1:112097210422:function:MessageHandler-stagging",
+    "functionMessageHandlerRegion":         "ap-south-1",
+    "functionMessageHandlerLambdaExecutionRole":    "resourcemanagerLambdaRole9fdd08f6-stagging",
+    "functionMessageHandlerLambdaExecutionRoleArn": "arn:aws:iam::112097210422:role/resourcemanagerLambdaRole9fdd08f6-stagging"
+  }
+  

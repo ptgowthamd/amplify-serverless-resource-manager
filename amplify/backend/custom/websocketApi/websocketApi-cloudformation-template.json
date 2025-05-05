@@ -1,0 +1,252 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"13.0.0\",\"stackType\":\"custom-customCloudformation\",\"metadata\":{\"whyContinueWithGen1\":\"\"}}",
+  "Parameters": {
+    "env": {
+      "Type": "String",
+      "Default": "stagging"
+    },
+    "functionConnectHandlerName": {
+      "Type": "String"
+    },
+    "functionConnectHandlerArn": {
+      "Type": "String"
+    },
+    "functionConnectHandlerRegion": {
+      "Type": "String"
+    },
+    "functionConnectHandlerLambdaExecutionRole": {
+      "Type": "String"
+    },
+    "functionConnectHandlerLambdaExecutionRoleArn": {
+      "Type": "String"
+    },
+    "functionDisconnectHandlerName": {
+      "Type": "String"
+    },
+    "functionDisconnectHandlerArn": {
+      "Type": "String"
+    },
+    "functionDisconnectHandlerRegion": {
+      "Type": "String"
+    },
+    "functionDisconnectHandlerLambdaExecutionRole": {
+      "Type": "String"
+    },
+    "functionDisconnectHandlerLambdaExecutionRoleArn": {
+      "Type": "String"
+    },
+    "functionMessageHandlerName": {
+      "Type": "String"
+    },
+    "functionMessageHandlerArn": {
+      "Type": "String"
+    },
+    "functionMessageHandlerRegion": {
+      "Type": "String"
+    },
+    "functionMessageHandlerLambdaExecutionRole": {
+      "Type": "String"
+    },
+    "functionMessageHandlerLambdaExecutionRoleArn": {
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "WebSocketApi": {
+      "Type": "AWS::ApiGatewayV2::Api",
+      "Properties": {
+        "Name": {
+          "Fn::Sub": "websocketApi-${env}"
+        },
+        "ProtocolType": "WEBSOCKET",
+        "RouteSelectionExpression": "$request.body.action"
+      }
+    },
+    "ConnectIntegration": {
+      "Type": "AWS::ApiGatewayV2::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "WebSocketApi"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${functionConnectHandlerArn}/invocations"
+        }
+      }
+    },
+    "DisconnectIntegration": {
+      "Type": "AWS::ApiGatewayV2::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "WebSocketApi"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${functionDisconnectHandlerArn}/invocations"
+        }
+      }
+    },
+    "MessageIntegration": {
+      "Type": "AWS::ApiGatewayV2::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "WebSocketApi"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${functionMessageHandlerArn}/invocations"
+        }
+      }
+    },
+    "ConnectRoute": {
+      "Type": "AWS::ApiGatewayV2::Route",
+      "DependsOn": [
+        "ConnectIntegration"
+      ],
+      "Properties": {
+        "ApiId": {
+          "Ref": "WebSocketApi"
+        },
+        "RouteKey": "$connect",
+        "AuthorizationType": "NONE",
+        "Target": {
+          "Fn::Join": [
+            "/",
+            [
+              "integrations",
+              {
+                "Ref": "ConnectIntegration"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    "DisconnectRoute": {
+      "Type": "AWS::ApiGatewayV2::Route",
+      "DependsOn": [
+        "DisconnectIntegration"
+      ],
+      "Properties": {
+        "ApiId": {
+          "Ref": "WebSocketApi"
+        },
+        "RouteKey": "$disconnect",
+        "AuthorizationType": "NONE",
+        "Target": {
+          "Fn::Join": [
+            "/",
+            [
+              "integrations",
+              {
+                "Ref": "DisconnectIntegration"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    "MessageRoute": {
+      "Type": "AWS::ApiGatewayV2::Route",
+      "DependsOn": [
+        "MessageIntegration"
+      ],
+      "Properties": {
+        "ApiId": {
+          "Ref": "WebSocketApi"
+        },
+        "RouteKey": "sendMessage",
+        "AuthorizationType": "NONE",
+        "Target": {
+          "Fn::Join": [
+            "/",
+            [
+              "integrations",
+              {
+                "Ref": "MessageIntegration"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    "Deployment": {
+      "Type": "AWS::ApiGatewayV2::Deployment",
+      "DependsOn": [
+        "ConnectRoute",
+        "DisconnectRoute",
+        "MessageRoute"
+      ],
+      "Properties": {
+        "ApiId": {
+          "Ref": "WebSocketApi"
+        }
+      }
+    },
+    "Stage": {
+      "Type": "AWS::ApiGatewayV2::Stage",
+      "DependsOn": [
+        "Deployment"
+      ],
+      "Properties": {
+        "ApiId": {
+          "Ref": "WebSocketApi"
+        },
+        "StageName": {
+          "Ref": "env"
+        },
+        "DeploymentId": {
+          "Ref": "Deployment"
+        },
+        "AutoDeploy": true
+      }
+    },
+    "ConnectLambdaPermission": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "functionConnectHandlerArn"
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Sub": "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${WebSocketApi}/*/$connect"
+        }
+      }
+    },
+    "DisconnectLambdaPermission": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "functionDisconnectHandlerArn"
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Sub": "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${WebSocketApi}/*/$disconnect"
+        }
+      }
+    },
+    "MessageLambdaPermission": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "functionMessageHandlerArn"
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Sub": "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${WebSocketApi}/*/sendMessage"
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "WebSocketApiEndpoint": {
+      "Value": {
+        "Fn::Sub": "wss://${WebSocketApi}.execute-api.${AWS::Region}.amazonaws.com/${env}"
+      }
+    }
+  }
+}

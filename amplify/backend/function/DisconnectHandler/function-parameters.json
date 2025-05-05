@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "storage": {
+      "Connections": [
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

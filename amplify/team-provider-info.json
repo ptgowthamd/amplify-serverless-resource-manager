@@ -1,0 +1,96 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-resourcemanager-dev-42387-authRole",
+      "UnauthRoleArn": "arn:aws:iam::112097210422:role/amplify-resourcemanager-dev-42387-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::112097210422:role/amplify-resourcemanager-dev-42387-authRole",
+      "Region": "ap-south-1",
+      "DeploymentBucketName": "amplify-resourcemanager-dev-42387-deployment",
+      "UnauthRoleName": "amplify-resourcemanager-dev-42387-unauthRole",
+      "StackName": "amplify-resourcemanager-dev-42387",
+      "StackId": "arn:aws:cloudformation:ap-south-1:112097210422:stack/amplify-resourcemanager-dev-42387/0e0c4c70-136f-11f0-9c16-025017df747b",
+      "AmplifyAppId": "d2peujg7zzovuo"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d2peujg7zzovuo",
+          "type": "manual"
+        }
+      },
+      "auth": {
+        "resourcemanager": {}
+      },
+      "function": {
+        "createVpcSubnetsLambdaFuntion": {
+          "deploymentBucketName": "amplify-resourcemanager-dev-42387-deployment",
+          "s3Key": "amplify-builds/createVpcSubnetsLambdaFuntion-4c5666576e7339313939-build.zip"
+        },
+        "getVpcDetailsLambdaFunction": {
+          "deploymentBucketName": "amplify-resourcemanager-dev-42387-deployment",
+          "s3Key": "amplify-builds/getVpcDetailsLambdaFunction-674d736d41475a325634-build.zip"
+        }
+      },
+      "storage": {
+        "UserVPCSubnetDetails": {}
+      }
+    }
+  },
+  "stagging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-cloneddevstaggingenv-stagging-bea83-authRole",
+      "UnauthRoleArn": "arn:aws:iam::112097210422:role/amplify-cloneddevstaggingenv-stagging-bea83-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::112097210422:role/amplify-cloneddevstaggingenv-stagging-bea83-authRole",
+      "Region": "ap-south-1",
+      "DeploymentBucketName": "amplify-cloneddevstaggingenv-stagging-bea83-deployment",
+      "UnauthRoleName": "amplify-cloneddevstaggingenv-stagging-bea83-unauthRole",
+      "StackName": "amplify-cloneddevstaggingenv-stagging-bea83",
+      "StackId": "arn:aws:cloudformation:ap-south-1:112097210422:stack/amplify-cloneddevstaggingenv-stagging-bea83/34ff3560-193f-11f0-a3bf-069c98397fb3",
+      "AmplifyAppId": "d2obkhn61dlalq"
+    },
+    "categories": {
+      "auth": {
+        "resourcemanager": {}
+      },
+      "function": {
+        "createVpcSubnetsLambdaFuntion": {
+          "deploymentBucketName": "amplify-cloneddevstaggingenv-stagging-bea83-deployment",
+          "s3Key": "amplify-builds/createVpcSubnetsLambdaFuntion-746532562b3661304f6c-build.zip"
+        },
+        "getVpcDetailsLambdaFunction": {
+          "deploymentBucketName": "amplify-cloneddevstaggingenv-stagging-bea83-deployment",
+          "s3Key": "amplify-builds/getVpcDetailsLambdaFunction-5a4e4d5976696f415045-build.zip"
+        },
+        "UserVPCSubnetDetails": {},
+        "ConnectHandler": {
+          "deploymentBucketName": "amplify-cloneddevstaggingenv-stagging-bea83-deployment",
+          "s3Key": "amplify-builds/ConnectHandler-71723279476c33705371-build.zip"
+        },
+        "DisconnectHandler": {
+          "deploymentBucketName": "amplify-cloneddevstaggingenv-stagging-bea83-deployment",
+          "s3Key": "amplify-builds/DisconnectHandler-56587436616854686975-build.zip"
+        },
+        "MessageHandler": {
+          "deploymentBucketName": "amplify-cloneddevstaggingenv-stagging-bea83-deployment",
+          "s3Key": "amplify-builds/MessageHandler-5369454757554b384e57-build.zip"
+        }
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d2obkhn61dlalq",
+          "type": "manual"
+        }
+      },
+      "api": {
+        "resourcemanager": {}
+      },
+      "storage": {
+        "UserVPCSubnetDetails": {},
+        "Connections": {}
+      },
+      "custom": {
+        "websocketApi": {}
+      }
+    }
+  }
+}
