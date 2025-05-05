@@ -367,6 +367,8 @@ Two GSIs are defined to facilitate efficient querying based on either the user o
 
 ![AuthFlow Screenshot 13](./screenshots/AuthFlow13.png)
 
+**New feature**
+
 ![AuthFlow Screenshot 14](./screenshots/AuthFlow14.png)
 
 ---
